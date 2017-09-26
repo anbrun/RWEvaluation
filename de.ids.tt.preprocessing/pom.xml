@@ -5,7 +5,6 @@
   <groupId>de.idsma.tt.preprocessing</groupId>
   <artifactId>de.idsma.tt.preprocessing</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
 
   <name>de.idsma.tt.preprocessing</name>
   <url>http://maven.apache.org</url>

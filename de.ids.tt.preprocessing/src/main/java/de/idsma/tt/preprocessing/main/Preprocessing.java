@@ -43,8 +43,8 @@ public class Preprocessing {
 	*/
 	// E4 DI OBJECTS
 	
-	//the tokenizer function
-	static String[] tokenize (String[] tokensArr) {
+	//prints the tokenized text
+	static String[] printTokenize (String[] tokensArr) {
         for (String token : tokensArr) {
             System.out.format("[%s]", token);
         }
@@ -74,10 +74,10 @@ public class Preprocessing {
 		String s = "";
 		//File f = new File ("annotatedFiles/erz");
 		//File f = new File ("annotatedFiles/zeit");
-		//File f = new File ("annotatedFiles/famz");
+		File f = new File ("annotatedFiles/famz");
 		//File f = new File ("annotatedFiles/valta");
 	    //File f = new File ("annotatedFiles/peterek");
-		File f = new File ("annotatedFiles/konsens");
+		//File f = new File ("annotatedFiles/konsens");
 
 		File[] inputDir = f.listFiles();
 	
@@ -91,7 +91,7 @@ public class Preprocessing {
 			 		CAS cas = CasCreationUtils.createCas(tsd, null, null);
 					try {
 						CasIOUtil.readCas(cas, xmiFile);
-						documentTokensCounter+=cas.getDocumentText().length();
+						//documentTokensCounter+=cas.getDocumentText().length();
 						//System.out.println("The document has: " + documentTokensCounter + " tokens.");
 						
 						/*
@@ -120,8 +120,11 @@ public class Preprocessing {
 						Feature posFeat = frameType.getFeatureByBaseName("Pos");
 						
 						
-						String [] tokensArray = cas.getDocumentText().split(
-								"(?=(?!^)[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])|(?<=[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])");
+						//Pattern p = Pattern.compile("\\w+", Pattern.UNICODE_CHARACTER_CLASS);
+						
+						String [] tokensArray =  printTokenize(cas.getDocumentText().split(
+								"\\s+"));
+				
 						
 						documentTokensCounter += tokensArray.length;
 						
@@ -135,26 +138,24 @@ public class Preprocessing {
 						for (AnnotationFS a : annoList) {
 							if (a.getFeatureValueAsString(rTypeFeat).equals("direct"))
 							{
-								String [] dirTokens = a.getCoveredText().split(
-										"(?=(?!^)[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])|(?<=[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])");
+								String [] dirTokens = printTokenize(a.getCoveredText().split(
+										//"(?=(?!^)[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])|(?<=[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])");
+										"\\s+"));
 								dirTokensCounter+=dirTokens.length;
 							}	
 							else if (a.getFeatureValueAsString(rTypeFeat).equals("indirect"))
 							{
-								String [] inDirTokens = a.getCoveredText().split(
-										"(?=(?!^)[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])|(?<=[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])");
+								String [] inDirTokens =  printTokenize(a.getCoveredText().split("\\s+"));
 								inDirTokensCounter+=inDirTokens.length;
 							}
 							else if (a.getFeatureValueAsString(rTypeFeat).equals("freeIndirect"))
 							{
-								String [] freeInDirTokens = a.getCoveredText().split(
-										"(?=(?!^)[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])|(?<=[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])");
+								String [] freeInDirTokens =  printTokenize(a.getCoveredText().split("\\s+"));
 								freeIndirTokensCounter+=freeInDirTokens.length;
 							}
 							else if (a.getFeatureValueAsString(rTypeFeat).equals("reported"))
 							{
-								String [] repTokens = a.getCoveredText().split(
-										"(?=(?!^)[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])|(?<=[>\\.\\!\\?\"»«\\s,\\;_\\:\\(\\)\\[\\]\\-\\'<\\„])");
+								String [] repTokens = printTokenize(a.getCoveredText().split("\\s+"));
 								repTokensCounter+=repTokens.length;
 							}
 						}
